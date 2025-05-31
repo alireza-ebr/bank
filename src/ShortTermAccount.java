@@ -1,0 +1,21 @@
+public class ShortTermAccount extends Account {
+    public ShortTermAccount(String accountNumber, double balance, String password, double governmentShare, Person user) {
+        super(accountNumber, balance, password, governmentShare, user);
+    }
+
+    @Override
+    public void withdraw(double amount) {
+        double deducated = amount * (1 + governmentShare);
+        if (deducated > balance) {
+            System.out.println("withdrawal failed: insufficient funds");
+            return;
+        }
+        balance -= deducated;
+        System.out.println("withdrew $" + amount + "after government share $" + deducated);
+    }
+
+    @Override
+    public AccountType getAccountType() {
+        return AccountType.SHORTTERMACCOUNT;
+    }
+}

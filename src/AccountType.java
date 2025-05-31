@@ -1,0 +1,5 @@
+public enum AccountType {
+    SHORTTERMACCOUNT,
+    LONGTERMACCOUNT,
+    GHARZOLHASANE
+}
