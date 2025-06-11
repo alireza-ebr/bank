@@ -12,7 +12,7 @@ public class LongTermAccount extends Account {
             System.out.println("Withdrawal failed : amount exceeds daily limit of $" + dailyWithdrawalLimit);
             return;
         }
-        double deducted = amount * (1 + governmentShare);
+        double deducted = amount * (1 - governmentShare);
         if (deducted > balance) {
             System.out.println("Withdrawal failed : insufficient founds.");
             return;

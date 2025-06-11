@@ -5,7 +5,7 @@ public class ShortTermAccount extends Account {
 
     @Override
     public void withdraw(double amount) {
-        double deducated = amount * (1 + governmentShare);
+        double deducated = amount * (1 - governmentShare);
         if (deducated > balance) {
             System.out.println("withdrawal failed: insufficient funds");
             return;
