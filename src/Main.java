@@ -141,6 +141,23 @@ public class Main {
         String gender = readString("Enter gender: ");
         return new Person(fiestName, lastName, birthYear, gender);
     }
+    public static void removeAccount() {
+        String accountNumber = readString("Enter account number you would like to remove: ");
+        Account accountToRemove = null;
+
+        for (Account account : accounts) {
+            if (account.getAccountNumber().equals(accountNumber)) {
+                accountToRemove = account;
+                break;
+            }
+        }
+        if (accountToRemove != null) {
+            accounts.remove(accountToRemove);
+            System.out.println("Account" + accountNumber + " has been removed successfully");
+        }else
+            System.out.println("Account " + accountNumber + " does not exist");
+
+    }
 }
 
 
