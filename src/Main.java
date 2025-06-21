@@ -60,9 +60,12 @@ public class Main {
 
         switch (item) {
             case 1 -> addAccount();
-            case 2 -> System.out.println("Remove account");
-            case 3 -> System.out.println("List all accounts");
-            case 4 -> System.out.println("Back to main menu");
+            case 2 -> removeAccount();
+            case 3 -> listAllAccounts();
+            case 4 -> {
+                System.out.println("Back to main menu");
+                showMenu();
+            }
             default -> System.out.println("Invalid option");
         }
     }
@@ -90,29 +93,32 @@ public class Main {
             System.out.println("Invalid account type");
         }
     }
+
     public static Account createShortTermAccount() {
         Person user = readPersonInfo();
         String accountNumber = readString("Account number (16 digits): ");
         String password = readString("Password: ");
         double balance = readDouble("Balance: ");
         double govShare = 0.1;
-        return new ShortTermAccount(accountNumber ,balance ,password ,govShare ,user);
+        return new ShortTermAccount(accountNumber, balance, password, govShare, user);
     }
+
     public static Account creatLongTermAccount() {
         Person user = readPersonInfo();
         String accountNumber = readString("Account number (16 digits): ");
         String password = readString("Password: ");
         double balance = readDouble("Balance: ");
         double govShare = 0.1;
-        return new LongTermAccount(accountNumber ,balance ,password ,govShare ,user);
+        return new LongTermAccount(accountNumber, balance, password, govShare, user);
     }
+
     public static Account createGharzolhasaneAccount() {
         Person user = readPersonInfo();
         String accountNumber = readString("Account number (16 digits): ");
         String password = readString("Password: ");
         double balance = readDouble("Balance: ");
         double govShare = 0.0;
-        return new GharzolHasaneAccount(accountNumber ,balance ,password ,govShare ,user);
+        return new GharzolHasaneAccount(accountNumber, balance, password, govShare, user);
     }
 
     public static String readString(String message) {
@@ -141,6 +147,7 @@ public class Main {
         String gender = readString("Enter gender: ");
         return new Person(fiestName, lastName, birthYear, gender);
     }
+
     public static void removeAccount() {
         String accountNumber = readString("Enter account number you would like to remove: ");
         Account accountToRemove = null;
@@ -154,8 +161,26 @@ public class Main {
         if (accountToRemove != null) {
             accounts.remove(accountToRemove);
             System.out.println("Account" + accountNumber + " has been removed successfully");
-        }else
+        } else
             System.out.println("Account " + accountNumber + " does not exist");
+
+    }
+
+    public static void listAllAccounts() {
+        if (accounts.isEmpty()) {
+            System.out.println("No accounts available");
+            return;
+        }
+
+        System.out.println("n*** List of all accounts ***");
+        for (Account account : accounts) {
+            System.out.println("-------------------------");
+            System.out.println("Account Number: " + account.getAccountNumber());
+            System.out.println("Balance: " + account.getBalance());
+            System.out.println("Account Owner: " + account.user.firstName + " " + account.user.lastName);
+            System.out.println("Account Type: " + account.getAccountType());
+        }
+        System.out.println("------------------------");
 
     }
 }
