@@ -183,6 +183,66 @@ public class Main {
         System.out.println("------------------------");
 
     }
+
+    public static void handleAccountOwnerLogin() {
+        String accountNumber = readString("Enter account number: ");
+        String password = readString("Enter password: ");
+
+        Account foundAccount = null;
+
+        for (Account account : accounts) {
+            if (account.getAccountNumber().equals(accountNumber)) {
+                foundAccount = account;
+                break;
+            }
+        }
+        if (foundAccount != null) {
+            System.out.println("Account " + accountNumber + " has been logged in successfully");
+            showAccountOwnerMenu(foundAccount);
+        } else
+            System.out.println("Invalid account number or password");
+    }
+
+    public static void showAccountOwnerMenu(Account account) {
+        int item;
+        do {
+            System.out.println("\n****Account Owner Menu****");
+            System.out.println("1.View Balance");
+            System.out.println("2.Deposit");
+            System.out.println("3.Withdraw");
+            System.out.println("Back to main menu");
+
+            item = readInt("Choose an option: ");
+
+            switch (item) {
+                case 1 -> System.out.println("Your balance is : " + account.getBalance());
+                case 2 ->  DepositFunc(account);
+                case 3 ->  withdrawFunc(account);
+                case 4 -> {
+                    System.out.println("Back to main menu");
+                    showMenu();
+                }
+                default -> System.out.println("Invalid option");
+            }
+        } while (item != 4);
+    }
+    public static void DepositFunc(Account account) {
+        double amount = readDouble("Enter amount to deposit: ");
+        account.setBalance(account.getBalance() + amount);
+        System.out.println("Deposit successful. New balance is: " + account.getBalance());
+
+    }
+    public static void withdrawFunc(Account account) {
+        double amount = readDouble("Enter amount to withdraw: ");
+        if (amount <=account.getBalance()) {
+            account.setBalance(account.getBalance() - amount);
+            System.out.println("Withdraw successful. New balance is: " + account.getBalance());
+        }
+        else {
+            System.out.println("Insufficient balance");
+        }
+    }
 }
+
 
 
