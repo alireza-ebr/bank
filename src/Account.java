@@ -12,6 +12,9 @@ public abstract class Account {
         this.governmentShare = governmentShare;
         this.user = user;
     }
+    public String getPassword(){
+        return password;
+    }
 
     public void deposit(double amount) {
         balance += amount;
@@ -25,6 +28,7 @@ public abstract class Account {
     public double getBalance() {
         return balance;
     }
+
     public void setBalance(double balance) {
         this.balance = balance;
     }
