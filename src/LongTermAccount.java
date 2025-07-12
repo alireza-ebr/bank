@@ -9,12 +9,12 @@ public class LongTermAccount extends Account {
     @Override
     public void withdraw(double amount) {
         if (amount > dailyWithdrawalLimit) {
-            System.out.println("Withdrawal failed : amount exceeds daily limit of $" + dailyWithdrawalLimit);
+            System.out.println(ErrorMessage.DAILY_LIMIT + dailyWithdrawalLimit);
             return;
         }
         double deducted = amount * (1 - governmentShare);
         if (deducted > balance) {
-            System.out.println("Withdrawal failed : insufficient founds.");
+            System.out.println(ErrorMessage.INSUFFICIENT);
             return;
         }
         balance -= deducted;

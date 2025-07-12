@@ -1,18 +1,13 @@
 import java.util.ArrayList;
-
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AdminMenu {
-    private Scanner scanner;
-    private ArrayList<Account> accounts;
-    private Util util;
+    private final Scanner scanner;
 
-    public AdminMenu(Scanner scanner, ArrayList<Account> accounts) {
+    public AdminMenu(Scanner scanner) {
         this.scanner = scanner;
-        this.accounts = accounts;
-        this.util = new Util(scanner);
     }
+    //TODO : make a class such as data storage static ArrayList<Account> accounts;
 
     public void show() {
         int item;
@@ -22,29 +17,29 @@ public class AdminMenu {
             System.out.println("2.Remove account");
             System.out.println("3.List all accounts");
             System.out.println("4.Back to main menu");
-            item = util.readInt("Choose an option: ");
-
-            switch (item) {
-                case 1 -> addAccount();
-                case 2 -> removeAccount();
-                case 3 -> listAllAccounts();
-                case 4 -> {
-                    System.out.println("Back to main menu");
-                    Main.showMenu();
-                }
-                default -> System.out.println("Invalid option");
+            item = Util.readInt("Choose an option: ");
+        } while (item > 4 || item < 1);
+        switch (item) {
+            case 1 -> addAccount();
+            case 2 -> removeAccount();
+            case 3 -> listAllAccounts();
+            case 4 -> {
+                System.out.println("Back to main menu");
+                Main.showMenu();
             }
-        } while (item != 4);
+            default -> System.out.println("Invalid option");
+        }
+
     }
 
-
     public void addAccount() {
+        //TODO : add do while
         System.out.println("\n Choose an account type :");
         System.out.println("1. Short term");
         System.out.println("2. Long term");
         System.out.println("3.Gharzolhasane");
 
-        int item = util.readInt("Enter option: ");
+        int item = Util.readInt("Enter option: ");
 
         Account newAccount = switch (item) {
             case 1 -> createShortTermAccount();
@@ -54,64 +49,64 @@ public class AdminMenu {
         };
 
         if (newAccount != null) {
-            accounts.add(newAccount);
+            DataStorage.accounts.add(newAccount);
             System.out.println("Account created");
         } else {
-            System.out.println("Invalid account type");
+            System.out.println(ErrorMessage.INVALID_ACCOUNT_TYPE);
         }
     }
 
     public Account createShortTermAccount() {
-        Person user = util.readPersonInfo();
+        Person user = Util.readPersonInfo();
 
         String accountNumber;
         do {
-            accountNumber = util.readString("Enter account number(16 digit): ");
-            if (!accountNumber.matches("\\d{16}")){
-                System.out.println("Invalid account number. It must be exactly 16 digits and contain only numbers.");
+            accountNumber = Util.readString("Enter account number(16 digit): ");
+            if (!accountNumber.matches("\\d{16}")) {
+                System.out.println(ErrorMessage.INVALID_ACCOUNT_NUMBER);
             }
         } while (!accountNumber.matches("\\d{16}"));
 
-        String password = util.readString("Password: ");
-        double balance = util.readDouble("Balance: ");
+        String password = Util.readString("Password: ");
+        double balance = Util.readDouble("Balance: ");
         double govShare = 0.1;
         return new ShortTermAccount(accountNumber, balance, password, govShare, user);
     }
 
     public Account createLongTermAccount() {
-        Person user = util.readPersonInfo();
+        Person user = Util.readPersonInfo();
         String accountNumber;
         do {
-            accountNumber = util.readString("Enter account number(16 digit): ");
+            accountNumber = Util.readString("Enter account number(16 digit): ");
             if (!accountNumber.matches("\\d{16}")) {
-                System.out.println("Invalid account number. It must be exactly 16 digits.");
+                System.out.println(ErrorMessage.INVALID_ACCOUNT_NUMBER);
             }
         } while (!accountNumber.matches("\\d{16}"));
 
-        String password = util.readString("Password: ");
-        double balance = util.readDouble("Balance: ");
+        String password = Util.readString("Password: ");
+        double balance = Util.readDouble("Balance: ");
         double govShare = 0.1;
         return new LongTermAccount(accountNumber, balance, password, govShare, user);
     }
 
     public Account createGharzolhasaneAccount() {
-        Person user = util.readPersonInfo();
+        Person user = Util.readPersonInfo();
         String accountNumber;
         do {
-            accountNumber = util.readString("Enter account number(16 digit): ");
+            accountNumber = Util.readString("Enter account number(16 digit): ");
             if (!accountNumber.matches("\\d{16}")) {
-                System.out.println("Invalid account number. It must be exactly 16 digits.");
+                System.out.println(ErrorMessage.INVALID_ACCOUNT_NUMBER);
             }
         } while (!accountNumber.matches("\\d{16}"));
 
-        String password = util.readString("Password: ");
-        double balance = util.readDouble("Balance: ");
+        String password = Util.readString("Password: ");
+        double balance = Util.readDouble("Balance: ");
         double govShare = 0.0;
         return new GharzolHasaneAccount(accountNumber, balance, password, govShare, user);
     }
 
     public void removeAccount() {
-        String accountNumber = util.readString("Enter account number you would like to remove: ");
+        String accountNumber = Util.readString("Enter account number you would like to remove: ").trim();
         Account accountToRemove = null;
 
         for (Account account : accounts) {

@@ -7,7 +7,7 @@ public class ShortTermAccount extends Account {
     public void withdraw(double amount) {
         double deducated = amount * (1 - governmentShare);
         if (deducated > balance) {
-            System.out.println("withdrawal failed: insufficient funds");
+            System.out.println(ErrorMessage.INSUFFICIENT);
             return;
         }
         balance -= deducated;
