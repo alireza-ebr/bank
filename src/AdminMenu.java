@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AdminMenu {
@@ -7,7 +6,6 @@ public class AdminMenu {
     public AdminMenu(Scanner scanner) {
         this.scanner = scanner;
     }
-    //TODO : make a class such as data storage static ArrayList<Account> accounts;
 
     public void show() {
         int item;
@@ -33,13 +31,13 @@ public class AdminMenu {
     }
 
     public void addAccount() {
-        //TODO : add do while
-        System.out.println("\n Choose an account type :");
-        System.out.println("1. Short term");
-        System.out.println("2. Long term");
-        System.out.println("3.Gharzolhasane");
-
         int item = Util.readInt("Enter option: ");
+        do {
+            System.out.println("\n Choose an account type :");
+            System.out.println("1. Short term");
+            System.out.println("2. Long term");
+            System.out.println("3.Gharzolhasane");
+        } while (item < 1 || item > 3);
 
         Account newAccount = switch (item) {
             case 1 -> createShortTermAccount();
@@ -109,14 +107,14 @@ public class AdminMenu {
         String accountNumber = Util.readString("Enter account number you would like to remove: ").trim();
         Account accountToRemove = null;
 
-        for (Account account : accounts) {
+        for (Account account : DataStorage.accounts) {
             if (account.getAccountNumber().equals(accountNumber)) {
                 accountToRemove = account;
                 break;
             }
         }
         if (accountToRemove != null) {
-            accounts.remove(accountToRemove);
+            DataStorage.accounts.remove(accountToRemove);
             System.out.println("Account" + accountNumber + " has been removed successfully");
         } else
             System.out.println("Account " + accountNumber + " does not exist");
@@ -124,13 +122,13 @@ public class AdminMenu {
     }
 
     public void listAllAccounts() {
-        if (accounts.isEmpty()) {
+        if (DataStorage.accounts.isEmpty()) {
             System.out.println("No accounts available");
             return;
         }
 
         System.out.println("\n*** List of all accounts ***");
-        for (Account account : accounts) {
+        for (Account account : DataStorage.accounts) {
             System.out.println("-------------------------");
             System.out.println("Account Number: " + account.getAccountNumber());
             System.out.println("Balance: " + account.getBalance());
