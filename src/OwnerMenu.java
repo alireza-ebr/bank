@@ -1,31 +1,26 @@
-import java.util.ArrayList;
-import java.util.Scanner;
-
 public class OwnerMenu {
-    private Scanner scanner = new Scanner(System.in);
-    private ArrayList<Account> accounts;
-
-    public OwnerMenu(Scanner scanner, ArrayList<Account> accounts) {
-        this.accounts = accounts;
-        this.scanner = scanner;
-    }
 
     public void handleAccountOwnerLogin() {
         String accountNumber = Util.readString("Enter account number: ");
         String password = Util.readString("Enter password: ");
-        Account foundAccount = null;
-//TODO : add a method for search with account number
-        for (Account account : accounts) {
-            if (account.getAccountNumber().equals(accountNumber) && account.getPassword().equals(password)) {
-                foundAccount = account;
-                break;
+
+        Account foundAccount = findAccountByNumber(accountNumber);
+
+        if (foundAccount != null && foundAccount.getPassword().equals(password)) {
+            System.out.println("Account " + accountNumber + "has been loged in successfully.");
+            showAccountOwnerMenu(foundAccount);
+        } else {
+            System.out.println(ErrorMessage.INVALID_PASSWORD_OR_ACCOUNT_NUMBER);
+        }
+    }
+
+    private Account findAccountByNumber(String accountNumber) {
+        for (Account account : DataStorage.accounts) {
+            if (account.getAccountNumber().equals(accountNumber)) {
+                return account;
             }
         }
-        if (foundAccount != null) {
-            System.out.println("Account " + accountNumber + " has been logged in successfully");
-            showAccountOwnerMenu(foundAccount);
-        } else
-            System.out.println(ErrorMessage.INVALID_PASSWORD_OR_ACCOUNT_NUMBER);
+        return null;
     }
 
     public void showAccountOwnerMenu(Account account) {
@@ -42,7 +37,7 @@ public class OwnerMenu {
         } while (item > 4 || item < 1);
         switch (item) {
             case 1 -> System.out.println("Your balance is : " + account.getBalance());
-            case 2 -> DepositFunc(account);
+            case 2 -> depositFunc(account);
             case 3 -> withdrawFunc(account);
             case 4 -> {
                 System.out.println("Back to main menu");
@@ -52,7 +47,7 @@ public class OwnerMenu {
         }
     }
 
-    public void DepositFunc(Account account) {
+    public void depositFunc(Account account) {
         double amount = Util.readDouble("Enter amount to deposit: ");
         account.setBalance(account.getBalance() + amount);
         System.out.println("Deposit successful. New balance is: " + account.getBalance());

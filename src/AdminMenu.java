@@ -2,9 +2,29 @@ import java.util.Scanner;
 
 public class AdminMenu {
     private final Scanner scanner;
+    private String adminUsername;
+    private String adminPassword;
 
     public AdminMenu(Scanner scanner) {
         this.scanner = scanner;
+
+        System.out.println("===Set up admin account====");
+        this.adminUsername = scanner.next("Enter new admin username: ");
+        this.adminPassword = scanner.next("Enter new admin password: ");
+        System.out.println("Admin account created successfully.");
+    }
+
+    public void handleAdminLogin() {
+        String username = Util.readString("Enter admin username: ");
+        String password = Util.readString("Enter admin password: ");
+
+        if (username.equals(adminUsername) && password.equals(adminPassword)) {
+            System.out.println("Admin login successfully.");
+            show();
+        } else {
+            System.out.println(ErrorMessage.INVALID_ADMIN);
+            Main.showMenu();
+        }
     }
 
     public void show() {
@@ -136,8 +156,5 @@ public class AdminMenu {
             System.out.println("Account Type: " + account.getAccountType());
         }
         System.out.println("------------------------");
-
     }
-
-
 }

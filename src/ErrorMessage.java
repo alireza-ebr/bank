@@ -5,4 +5,5 @@ public class ErrorMessage {
             "contain only numbers";
     public static final String DAILY_LIMIT = "Withdrawal failed : amount exeed daily limit of $";
     public static final String INSUFFICIENT = "Withdrawal failed : insufficient founds";
+    public static final String INVALID_ADMIN = "Invalid admin credentials";
 }
