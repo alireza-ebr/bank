@@ -2,8 +2,8 @@ import java.util.Scanner;
 
 public class AdminMenu {
     private final Scanner scanner;
-    private String adminUsername;
-    private String adminPassword;
+    private final String adminUsername;
+    private final String adminPassword;
 
     public AdminMenu(Scanner scanner) {
         this.scanner = scanner;
@@ -125,20 +125,23 @@ public class AdminMenu {
 
     public void removeAccount() {
         String accountNumber = Util.readString("Enter account number you would like to remove: ").trim();
-        Account accountToRemove = null;
+        Account accountToRemove = findAccountByNumber(accountNumber);
 
-        for (Account account : DataStorage.accounts) {
-            if (account.getAccountNumber().equals(accountNumber)) {
-                accountToRemove = account;
-                break;
-            }
-        }
         if (accountToRemove != null) {
             DataStorage.accounts.remove(accountToRemove);
             System.out.println("Account" + accountNumber + " has been removed successfully");
         } else
             System.out.println("Account " + accountNumber + " does not exist");
 
+    }
+
+    public Account findAccountByNumber(String accountNumber) {
+        for (Account account : DataStorage.accounts) {
+            if (account.getAccountNumber().equals(accountNumber)) {
+                return account;
+            }
+        }
+        return null;
     }
 
     public void listAllAccounts() {
