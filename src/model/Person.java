@@ -1,7 +1,7 @@
-
+package model;
 public class Person {
-    protected String firstName;
-    protected String lastName;
+    public String firstName;
+    public String lastName;
     protected int birthYear;
     protected String gender;
 

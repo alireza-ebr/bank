@@ -1,7 +1,11 @@
+package util;
+
+import model.Person;
+
 import java.util.Scanner;
 
 public class Util {
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
     public static String readString(String message) {
         System.out.println(message);
@@ -23,11 +27,10 @@ public class Util {
     }
 
     public static Person readPersonInfo() {
-        String fiestName = readString("Enter first name: ");
+        String firstName = readString("Enter first name: ");
         String lastName = readString("Enter last name: ");
         int birthYear = readInt("Enter birth year: ");
         String gender = readString("Enter gender: ");
-        return new Person(fiestName, lastName, birthYear, gender);
+        return new Person(firstName, lastName, birthYear, gender);
     }
-
 }

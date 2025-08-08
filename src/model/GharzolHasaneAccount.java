@@ -1,5 +1,13 @@
+
+package model;
+import enums.AccountType;
+
+
 public class GharzolHasaneAccount extends Account {
-    public GharzolHasaneAccount(String accountNumber, double balance, String passwornd,double governmentShare,Person user) {
+    private static final String passwornd  = "12344";
+    private static final AccountType GHARZOL_HASANE_ACCOUNT = null;
+
+    public GharzolHasaneAccount(String accountNumber, double balance, String password, double governmentShare, Person user) {
         super(accountNumber, balance, passwornd, 0,user);
     }
     @Override
@@ -12,6 +20,6 @@ public class GharzolHasaneAccount extends Account {
 
     @Override
     public AccountType getAccountType() {
-        return AccountType.GHARZOLHASANE;
+        return AccountType.GHARZOL_HASANE_ACCOUNT;
     }
 }

@@ -1,3 +1,5 @@
+package menu;
+
 public class OwnerMenu {
 
     public void handleAccountOwnerLogin() {

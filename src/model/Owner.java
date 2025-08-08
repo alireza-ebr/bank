@@ -1,8 +1,9 @@
+package model;
 import java.util.ArrayList;
 
 public class Owner extends Person {
 
-    private ArrayList<Account> accounts;
+    private  ArrayList<Account> accounts;
 
     public Owner(String firstName, String lastName, int birthYear, String email) {
         super(firstName, lastName, birthYear, email);

@@ -1,3 +1,8 @@
+package main;
+
+import menu.AdminMenu;
+import menu.OwnerMenu;
+
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -19,7 +24,6 @@ public class Main {
             System.out.print("Choose an option: ");
             item = scanner.nextInt();
         } while (item < 1 || item > 3);
-
         switch (item) {
             case 1 -> {
                 AdminMenu adminMenu = new AdminMenu(scanner);

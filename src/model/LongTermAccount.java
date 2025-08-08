@@ -1,3 +1,8 @@
+package model;
+
+import enums.AccountType;
+import exception.ErrorMessage;
+
 public class LongTermAccount extends Account {
     private final double monthlyInterestRate = 0.10;
     private final double dailyWithdrawalLimit = 100;

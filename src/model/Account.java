@@ -1,9 +1,13 @@
+package model;
+
+import enums.AccountType;
+
 public abstract class Account {
+    protected final double governmentShare;
+    public Person user;
     protected String accountNumber;
     protected double balance;
     protected String password;
-    protected final double governmentShare;
-    protected Person user;
 
     public Account(String accountNumber, double balance, String password, double governmentShare, Person user) {
         this.accountNumber = accountNumber;
@@ -12,7 +16,8 @@ public abstract class Account {
         this.governmentShare = governmentShare;
         this.user = user;
     }
-    public String getPassword(){
+
+    public String getPassword() {
         return password;
     }
 

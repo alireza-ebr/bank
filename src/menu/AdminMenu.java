@@ -1,3 +1,11 @@
+package menu;
+
+import data.DataStorage;
+import exception.ErrorMessage;
+import main.Main;
+import model.*;
+import util.Util;
+
 import java.util.Scanner;
 
 public class AdminMenu {
@@ -7,7 +15,6 @@ public class AdminMenu {
 
     public AdminMenu(Scanner scanner) {
         this.scanner = scanner;
-
         System.out.println("===Set up admin account====");
         this.adminUsername = scanner.next("Enter new admin username: ");
         this.adminPassword = scanner.next("Enter new admin password: ");
@@ -132,7 +139,6 @@ public class AdminMenu {
             System.out.println("Account" + accountNumber + " has been removed successfully");
         } else
             System.out.println("Account " + accountNumber + " does not exist");
-
     }
 
     public Account findAccountByNumber(String accountNumber) {

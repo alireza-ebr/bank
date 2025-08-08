@@ -1,3 +1,9 @@
+package model;
+
+import enums.AccountType;
+import exception.ErrorMessage;
+
+
 public class ShortTermAccount extends Account {
     public ShortTermAccount(String accountNumber, double balance, String password, double governmentShare, Person user) {
         super(accountNumber, balance, password, governmentShare, user);

@@ -1,3 +1,7 @@
+package data;
+
+import model.Account;
+
 import java.util.ArrayList;
 
 public class DataStorage {

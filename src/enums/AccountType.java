@@ -1,0 +1,7 @@
+package enums;
+
+public enum AccountType {
+    SHORT_TERM_ACCOUNT,
+    LONG_TERM_ACCOUNT,
+    GHARZOL_HASANE_ACCOUNT, LONGTERMACCOUNT, SHORTTERMACCOUNT,
+}

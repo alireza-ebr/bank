@@ -1,7 +1,9 @@
+package model;
+
 import java.util.Scanner;
 
 public class Admin extends Person {
-    private String username;
+    private final String username;
     private String password;
 
     public Admin(String name, String lastName, int birthYear, String gender, String username, String password) {
