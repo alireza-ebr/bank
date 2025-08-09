@@ -1,6 +1,7 @@
 package model;
 
 import enums.AccountType;
+import exception.ErrorMessage;
 
 public abstract class Account {
     protected final double governmentShare;
@@ -10,11 +11,27 @@ public abstract class Account {
     protected String password;
 
     public Account(String accountNumber, double balance, String password, double governmentShare, Person user) {
+        if (accountNumber == null || !accountNumber.matches(("\\d{16}"))) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_ACCOUNT_NUMBER);
+        }
+        if (password == null || password.isEmpty()) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_PASSWORD_OR_ACCOUNT_NUMBER);
+        }
+        if (user == null) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_USER);
+        }
+        if (balance < 0) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_BALANCE);
+        }
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.password = password;
         this.governmentShare = governmentShare;
         this.user = user;
+    }
+
+    protected Account(double governmentShare) {
+        this.governmentShare = governmentShare;
     }
 
     public String getPassword() {

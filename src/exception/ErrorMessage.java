@@ -1,5 +1,7 @@
 package exception;
 
+import javax.xml.crypto.dsig.spec.XSLTTransformParameterSpec;
+
 public interface ErrorMessage {
     String INVALID_PASSWORD_OR_ACCOUNT_NUMBER = "Invalid account number or password";
     String INVALID_ACCOUNT_TYPE = "Invalid account type";
@@ -8,4 +10,6 @@ public interface ErrorMessage {
     String DAILY_LIMIT = "Withdrawal failed : amount exeed daily limit of $";
     String INSUFFICIENT = "Withdrawal failed : insufficient founds";
     String INVALID_ADMIN = "Invalid admin credentials";
+    String INVALID_BALANCE = "Invalid balance";
+    String INVALID_USER = "Invalid user";
 }
