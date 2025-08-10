@@ -1,6 +1,9 @@
 
 package model;
 import enums.AccountType;
+import exception.DepositException;
+import exception.ErrorMessage;
+import exception.WithdrawException;
 
 
 public class GharzolHasaneAccount extends Account {
@@ -12,10 +15,10 @@ public class GharzolHasaneAccount extends Account {
     }
     @Override
     public void deposit(double amount) {
-        System.out.println("Deposit not allowed for Gharzolhasane account");
+        throw new DepositException(ErrorMessage.DEPOSIT_FAILED);
     }
     public void withdraw(double amount) {
-        System.out.println("Withdraw not allowed for Gharzolhasane account");
+        throw new WithdrawException(ErrorMessage.WITHDRAWAL_FAILED);
     }
 
     @Override

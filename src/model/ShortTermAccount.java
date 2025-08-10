@@ -2,6 +2,7 @@ package model;
 
 import enums.AccountType;
 import exception.ErrorMessage;
+import exception.InsufficientFounds;
 
 
 public class ShortTermAccount extends Account {
@@ -13,8 +14,7 @@ public class ShortTermAccount extends Account {
     public void withdraw(double amount) {
         double deducated = amount * (1 - governmentShare);
         if (deducated > balance) {
-            System.out.println(ErrorMessage.INSUFFICIENT);
-            return;
+            throw new InsufficientFounds(ErrorMessage.INSUFFICIENT);
         }
         balance -= deducated;
         System.out.println("withdrew $" + amount + "after government share $" + deducated);

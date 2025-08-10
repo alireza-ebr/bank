@@ -1,6 +1,7 @@
 package menu;
 
 import data.DataStorage;
+import exception.AdminLoginException;
 import exception.ErrorMessage;
 import main.Main;
 import model.*;
@@ -22,14 +23,18 @@ public class AdminMenu {
     }
 
     public void handleAdminLogin() {
-        String username = Util.readString("Enter admin username: ");
-        String password = Util.readString("Enter admin password: ");
+        try {
+            String username = Util.readString("Enter admin username: ");
+            String password = Util.readString("Enter admin password: ");
 
-        if (username.equals(adminUsername) && password.equals(adminPassword)) {
-            System.out.println("Admin login successfully.");
-            show();
-        } else {
-            System.out.println(ErrorMessage.INVALID_ADMIN);
+            if (username.equals(adminUsername) && password.equals(adminPassword)) {
+                System.out.println("Admin login successfully.");
+                show();
+            } else {
+                throw new AdminLoginException("Admin log in not succesfull");
+            }
+        } catch (AdminLoginException e) {
+            System.out.println(e.getMessage());
             Main.showMenu();
         }
     }
@@ -167,3 +172,4 @@ public class AdminMenu {
         System.out.println("------------------------");
     }
 }
+

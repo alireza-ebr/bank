@@ -12,4 +12,6 @@ public interface ErrorMessage {
     String INVALID_ADMIN = "Invalid admin credentials";
     String INVALID_BALANCE = "Invalid balance";
     String INVALID_USER = "Invalid user";
+    String DEPOSIT_FAILED = "Deposit not allowed for Gharzolhasane account";
+    String WITHDRAWAL_FAILED = "Withdraw not allowed for Gharzolhasane account";
 }

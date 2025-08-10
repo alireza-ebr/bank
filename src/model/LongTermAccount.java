@@ -2,6 +2,7 @@ package model;
 
 import enums.AccountType;
 import exception.ErrorMessage;
+import exception.InsufficientFounds;
 
 public class LongTermAccount extends Account {
     private final double monthlyInterestRate = 0.10;
@@ -19,8 +20,7 @@ public class LongTermAccount extends Account {
         }
         double deducted = amount * (1 - governmentShare);
         if (deducted > balance) {
-            System.out.println(ErrorMessage.INSUFFICIENT);
-            return;
+            throw new InsufficientFounds("Withdrawal failed : insufficient funds");
         }
         balance -= deducted;
         System.out.println("Withdrew $" + amount + "after government share : $" + deducted + ")");
