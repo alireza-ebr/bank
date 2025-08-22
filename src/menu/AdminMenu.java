@@ -87,7 +87,11 @@ public class AdminMenu {
     }
 
     public Account createShortTermAccount() {
-        Person user = Util.readPersonInfo();
+       String firstName = Util.readString("Enter first name: ");
+       String lastName = Util.readString("Enter last name: ");
+       int birthYear = Util.readInt("Enter birth year: ");
+       String gender = Util.readString("Enter gender: ");
+       Person user = new Person(firstName,lastName,birthYear,gender);
 
         String accountNumber;
         do {
@@ -104,7 +108,12 @@ public class AdminMenu {
     }
 
     public Account createLongTermAccount() {
-        Person user = Util.readPersonInfo();
+        String firstName = Util.readString("Enter first name: ");
+        String lastName = Util.readString("Enter last name: ");
+        int birthYear = Util.readInt("Enter birth year: ");
+        String gender = Util.readString("Enter gender: ");
+        Person user = new Person(firstName,lastName,birthYear,gender);
+
         String accountNumber;
         do {
             accountNumber = Util.readString("Enter account number(16 digit): ");
@@ -120,7 +129,12 @@ public class AdminMenu {
     }
 
     public Account createGharzolhasaneAccount() {
-        Person user = Util.readPersonInfo();
+        String firstName = Util.readString("Enter first name: ");
+        String lastName = Util.readString("Enter last name: ");
+        int birthYear = Util.readInt("Enter birth year: ");
+        String gender = Util.readString("Enter gender: ");
+        Person user = new Person(firstName,lastName,birthYear,gender);
+
         String accountNumber;
         do {
             accountNumber = Util.readString("Enter account number(16 digit): ");

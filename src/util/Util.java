@@ -24,7 +24,4 @@ public class Util {
         scanner.nextLine();
         return value;
     }
-
-    public static Person readPersonInfo() {
-    }
 }
