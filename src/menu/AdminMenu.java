@@ -1,8 +1,11 @@
+
 package menu;
 
 import data.DataStorage;
 import exception.AdminLoginException;
 import exception.ErrorMessage;
+import exception.InvalidAccountNumberException;
+import exception.InvalidAccountTypeException;
 import main.Main;
 import model.*;
 import util.Util;
@@ -33,13 +36,13 @@ public class AdminMenu {
             } else {
                 throw new AdminLoginException("Admin log in not succesfull");
             }
-        } catch (AdminLoginException e) {
+        } catch (AdminLoginException | InvalidAccountTypeException | InvalidAccountNumberException e) {
             System.out.println(e.getMessage());
             Main.showMenu();
         }
     }
 
-    public void show() {
+    public void show() throws InvalidAccountTypeException, InvalidAccountNumberException {
         int item;
         do {
             System.out.println("***ADMIN MENU***");
@@ -62,7 +65,7 @@ public class AdminMenu {
 
     }
 
-    public void addAccount() {
+    public void addAccount() throws InvalidAccountTypeException, InvalidAccountNumberException {
         int item = Util.readInt("Enter option: ");
         do {
             System.out.println("\n Choose an account type :");
@@ -75,7 +78,7 @@ public class AdminMenu {
             case 1 -> createShortTermAccount();
             case 2 -> createLongTermAccount();
             case 3 -> createGharzolhasaneAccount();
-            default -> null;
+            default -> throw new InvalidAccountTypeException("Invalid account type selected");
         };
 
         if (newAccount != null) {
@@ -86,7 +89,7 @@ public class AdminMenu {
         }
     }
 
-    public Account createShortTermAccount() {
+    public Account createShortTermAccount() throws InvalidAccountNumberException {
        String firstName = Util.readString("Enter first name: ");
        String lastName = Util.readString("Enter last name: ");
        int birthYear = Util.readInt("Enter birth year: ");
@@ -97,7 +100,7 @@ public class AdminMenu {
         do {
             accountNumber = Util.readString("Enter account number(16 digit): ");
             if (!accountNumber.matches("\\d{16}")) {
-                System.out.println(ErrorMessage.INVALID_ACCOUNT_NUMBER);
+                throw new InvalidAccountNumberException("Invalid account number");
             }
         } while (!accountNumber.matches("\\d{16}"));
 
@@ -180,7 +183,7 @@ public class AdminMenu {
             System.out.println("-------------------------");
             System.out.println("Account Number: " + account.getAccountNumber());
             System.out.println("Balance: " + account.getBalance());
-            System.out.println("Account Owner: " + account.user.firstName + " " + account.user.lastName);
+            System.out.println("Account Owner: " + account.user.getFirstName() + " " + account.user.getLastName());
             System.out.println("Account Type: " + account.getAccountType());
         }
         System.out.println("------------------------");
