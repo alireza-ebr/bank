@@ -51,7 +51,7 @@ public class OwnerMenu {
                 System.out.println("Back to main menu");
                 Main.showMenu();
             }
-            default -> System.out.println("Invalid option");
+            default -> System.out.println(ErrorMessage.INVALIED_OPTION);
         }
     }
 

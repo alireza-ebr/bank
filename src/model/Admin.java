@@ -1,8 +1,7 @@
 package model;
 
-import exception.InvalidPsswordException;
-
-import java.util.Scanner;
+import exception.ErrorMessage;
+import exception.InvalidCredentialsException;
 
 public class Admin extends Person {
     private final String username;
@@ -18,12 +17,11 @@ public class Admin extends Person {
         return this.username.equals(username) && this.password.equals(password);
     }
 
-    public void changePassword(String password) throws InvalidPsswordException {
+    public void changePassword(String password) throws InvalidCredentialsException {
         if (isValidPassword(password)) {
             this.password = password;
         } else {
-            throw new InvalidPsswordException(
-            "Password must be at least 8 characters, contain one uppercase letter and one digit.");
+            throw new InvalidCredentialsException(ErrorMessage.INVALID_ACCOUNT_NUMBER);
         }
     }
 

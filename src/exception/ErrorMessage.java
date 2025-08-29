@@ -1,7 +1,5 @@
 package exception;
 
-import javax.xml.crypto.dsig.spec.XSLTTransformParameterSpec;
-
 public interface ErrorMessage {
     String INVALID_PASSWORD_OR_ACCOUNT_NUMBER = "Invalid account number or password";
     String INVALID_ACCOUNT_TYPE = "Invalid account type";
@@ -14,4 +12,6 @@ public interface ErrorMessage {
     String INVALID_USER = "Invalid user";
     String DEPOSIT_FAILED = "Deposit not allowed for Gharzolhasane account";
     String WITHDRAWAL_FAILED = "Withdraw not allowed for Gharzolhasane account";
+    String LOGIN_FAILED = "Login not successful";
+    String INVALIED_OPTION = "Invalid operation";
 }

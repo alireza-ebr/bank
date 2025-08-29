@@ -1,10 +1,9 @@
 
 package model;
 import enums.AccountType;
-import exception.DepositException;
+import exception.InsufficientBalanceException;
+import exception.TransactionFailedException;
 import exception.ErrorMessage;
-import exception.WithdrawException;
-
 
 public class GharzolHasaneAccount extends Account {
     private static final String passwornd  = "12344";
@@ -15,10 +14,10 @@ public class GharzolHasaneAccount extends Account {
     }
     @Override
     public void deposit(double amount) {
-        throw new DepositException(ErrorMessage.DEPOSIT_FAILED);
+        throw new TransactionFailedException(ErrorMessage.DEPOSIT_FAILED);
     }
     public void withdraw(double amount) {
-        throw new WithdrawException(ErrorMessage.WITHDRAWAL_FAILED);
+        throw new InsufficientBalanceException(ErrorMessage.WITHDRAWAL_FAILED);
     }
 
     @Override

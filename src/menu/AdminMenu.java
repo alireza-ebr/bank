@@ -2,10 +2,9 @@
 package menu;
 
 import data.DataStorage;
-import exception.AdminLoginException;
+import exception.LoginFailedException;
 import exception.ErrorMessage;
-import exception.InvalidAccountNumberException;
-import exception.InvalidAccountTypeException;
+import exception.InvalidInputException;
 import main.Main;
 import model.*;
 import util.Util;
@@ -31,18 +30,18 @@ public class AdminMenu {
             String password = Util.readString("Enter admin password: ");
 
             if (username.equals(adminUsername) && password.equals(adminPassword)) {
-                System.out.println("Admin login successfully.");
+                System.out.println("Login successfully.");
                 show();
             } else {
-                throw new AdminLoginException("Admin log in not succesfull");
+                throw new LoginFailedException(ErrorMessage.LOGIN_FAILED);
             }
-        } catch (AdminLoginException | InvalidAccountTypeException | InvalidAccountNumberException e) {
+        } catch (LoginFailedException | InvalidInputException e) {
             System.out.println(e.getMessage());
             Main.showMenu();
         }
     }
 
-    public void show() throws InvalidAccountTypeException, InvalidAccountNumberException {
+    public void show() throws InvalidInputException {
         int item;
         do {
             System.out.println("***ADMIN MENU***");
@@ -60,12 +59,12 @@ public class AdminMenu {
                 System.out.println("Back to main menu");
                 Main.showMenu();
             }
-            default -> System.out.println("Invalid option");
+            default -> System.out.println(ErrorMessage.INVALIED_OPTION);
         }
 
     }
 
-    public void addAccount() throws InvalidAccountTypeException, InvalidAccountNumberException {
+    public void addAccount() throws InvalidInputException {
         int item = Util.readInt("Enter option: ");
         do {
             System.out.println("\n Choose an account type :");
@@ -78,7 +77,7 @@ public class AdminMenu {
             case 1 -> createShortTermAccount();
             case 2 -> createLongTermAccount();
             case 3 -> createGharzolhasaneAccount();
-            default -> throw new InvalidAccountTypeException("Invalid account type selected");
+            default -> throw new InvalidInputException(ErrorMessage.INVALID_ACCOUNT_TYPE);
         };
 
         if (newAccount != null) {
@@ -89,7 +88,7 @@ public class AdminMenu {
         }
     }
 
-    public Account createShortTermAccount() throws InvalidAccountNumberException {
+    public Account createShortTermAccount() throws InvalidInputException {
        String firstName = Util.readString("Enter first name: ");
        String lastName = Util.readString("Enter last name: ");
        int birthYear = Util.readInt("Enter birth year: ");
@@ -100,7 +99,7 @@ public class AdminMenu {
         do {
             accountNumber = Util.readString("Enter account number(16 digit): ");
             if (!accountNumber.matches("\\d{16}")) {
-                throw new InvalidAccountNumberException("Invalid account number");
+                throw new InvalidInputException("Invalid account number");
             }
         } while (!accountNumber.matches("\\d{16}"));
 
@@ -158,9 +157,9 @@ public class AdminMenu {
 
         if (accountToRemove != null) {
             DataStorage.accounts.remove(accountToRemove);
-            System.out.println("Account" + accountNumber + " has been removed successfully");
+            System.out.println(String.format("Account %s has been removed successfully", accountNumber));
         } else
-            System.out.println("Account " + accountNumber + " does not exist");
+            System.out.println(String.format("Account %s dose not exist", accountNumber));
     }
 
     public Account findAccountByNumber(String accountNumber) {
@@ -177,14 +176,13 @@ public class AdminMenu {
             System.out.println("No accounts available");
             return;
         }
-
         System.out.println("\n*** List of all accounts ***");
         for (Account account : DataStorage.accounts) {
             System.out.println("-------------------------");
-            System.out.println("Account Number: " + account.getAccountNumber());
-            System.out.println("Balance: " + account.getBalance());
-            System.out.println("Account Owner: " + account.user.getFirstName() + " " + account.user.getLastName());
-            System.out.println("Account Type: " + account.getAccountType());
+            System.out.println(String.format("Account Number: %s", account.getAccountNumber()));
+            System.out.println(String.format("Balance: %.s", account.getBalance()));
+            System.out.println(String.format("Account Owner: %s  %s",account.user.getFirstName(), account.user.getLastName()));
+            System.out.println(String.format("Account Type: %s", account.getAccountType()));
         }
         System.out.println("------------------------");
     }

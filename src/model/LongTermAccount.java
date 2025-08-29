@@ -1,8 +1,10 @@
+
 package model;
 
 import enums.AccountType;
 import exception.ErrorMessage;
-import exception.InsufficientFounds;
+import exception.LimitExceededException;
+import exception.LimitExceededException;
 
 public class LongTermAccount extends Account {
     private final double monthlyInterestRate = 0.10;
@@ -15,12 +17,11 @@ public class LongTermAccount extends Account {
     @Override
     public void withdraw(double amount) {
         if (amount > dailyWithdrawalLimit) {
-            System.out.println(ErrorMessage.DAILY_LIMIT + dailyWithdrawalLimit);
-            return;
+            throw new LimitExceededException("Withdrawal failed : Daily limit");
         }
         double deducted = amount * (1 - governmentShare);
         if (deducted > balance) {
-            throw new InsufficientFounds("Withdrawal failed : insufficient funds");
+            throw new LimitExceededException(ErrorMessage.INSUFFICIENT);
         }
         balance -= deducted;
         System.out.println("Withdrew $" + amount + "after government share : $" + deducted + ")");
