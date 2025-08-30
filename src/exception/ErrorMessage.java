@@ -14,4 +14,6 @@ public interface ErrorMessage {
     String WITHDRAWAL_FAILED = "Withdraw not allowed for Gharzolhasane account";
     String LOGIN_FAILED = "Login not successful";
     String INVALIED_OPTION = "Invalid operation";
+    String AMOUNT_POSITIVE = "Amount must be positive";
+    String INSUFFICENT_BALANCE = "Insufficient balance";
 }

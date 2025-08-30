@@ -3,6 +3,7 @@ package model;
 
 import enums.AccountType;
 import exception.ErrorMessage;
+import exception.InvalidAccountException;
 import exception.LimitExceededException;
 import exception.LimitExceededException;
 
@@ -10,7 +11,7 @@ public class LongTermAccount extends Account {
     private final double monthlyInterestRate = 0.10;
     private final double dailyWithdrawalLimit = 100;
 
-    public LongTermAccount(String accountNumber, double balance, String password, double governmentShare, Person user) {
+    public LongTermAccount(String accountNumber, double balance, String password, double governmentShare, Person user) throws InvalidAccountException {
         super(accountNumber, balance, password, governmentShare, user);
     }
 

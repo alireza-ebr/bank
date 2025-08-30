@@ -1,7 +1,10 @@
 package model;
 
+import exception.WithdrawalException;
 import enums.AccountType;
 import exception.ErrorMessage;
+import exception.InsufficientBalanceException;
+import exception.InvalidAccountException;
 
 public abstract class Account {
     protected final double governmentShare;
@@ -10,18 +13,18 @@ public abstract class Account {
     protected double balance;
     protected String password;
 
-    public Account(String accountNumber, double balance, String password, double governmentShare, Person user) {
+    public Account(String accountNumber, double balance, String password, double governmentShare, Person user) throws InvalidAccountException {
         if (accountNumber == null || !accountNumber.matches(("\\d{16}"))) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_ACCOUNT_NUMBER);
+            throw new InvalidAccountException(ErrorMessage.INVALID_ACCOUNT_NUMBER);
         }
         if (password == null || password.isEmpty()) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_PASSWORD_OR_ACCOUNT_NUMBER);
+            throw new InvalidAccountException(ErrorMessage.INVALID_PASSWORD_OR_ACCOUNT_NUMBER);
         }
         if (user == null) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_USER);
+            throw new InvalidAccountException(ErrorMessage.INVALID_USER);
         }
         if (balance < 0) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_BALANCE);
+            throw new InvalidAccountException(ErrorMessage.INVALID_BALANCE);
         }
         this.accountNumber = accountNumber;
         this.balance = balance;
@@ -42,8 +45,14 @@ public abstract class Account {
         balance += amount;
     }
 
-    public void withdraw(double amount) {
+    public void withdraw(double amount) throws WithdrawalException {
+        if (amount<=0){
+            throw new WithdrawalException(ErrorMessage.AMOUNT_POSITIVE);
+        }
         double deducted = amount * (1 - governmentShare);
+        if (deducted>balance){
+            throw new InsufficientBalanceException(ErrorMessage.INSUFFICENT_BALANCE);
+        }
         balance -= deducted;
     }
 

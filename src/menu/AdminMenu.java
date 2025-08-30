@@ -2,6 +2,7 @@
 package menu;
 
 import data.DataStorage;
+import exception.InvalidAccountException;
 import exception.LoginFailedException;
 import exception.ErrorMessage;
 import exception.InvalidInputException;
@@ -38,10 +39,12 @@ public class AdminMenu {
         } catch (LoginFailedException | InvalidInputException e) {
             System.out.println(e.getMessage());
             Main.showMenu();
+        } catch (InvalidAccountException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public void show() throws InvalidInputException {
+    public void show() throws InvalidInputException, InvalidAccountException {
         int item;
         do {
             System.out.println("***ADMIN MENU***");
@@ -64,7 +67,7 @@ public class AdminMenu {
 
     }
 
-    public void addAccount() throws InvalidInputException {
+    public void addAccount() throws InvalidInputException, InvalidAccountException {
         int item = Util.readInt("Enter option: ");
         do {
             System.out.println("\n Choose an account type :");
@@ -109,7 +112,7 @@ public class AdminMenu {
         return new ShortTermAccount(accountNumber, balance, password, govShare, user);
     }
 
-    public Account createLongTermAccount() {
+    public Account createLongTermAccount() throws InvalidAccountException {
         String firstName = Util.readString("Enter first name: ");
         String lastName = Util.readString("Enter last name: ");
         int birthYear = Util.readInt("Enter birth year: ");
