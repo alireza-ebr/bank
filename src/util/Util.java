@@ -1,7 +1,5 @@
 package util;
 
-import model.Person;
-
 import java.util.Scanner;
 
 public class Util {

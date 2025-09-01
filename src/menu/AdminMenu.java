@@ -1,11 +1,10 @@
-
 package menu;
 
 import data.DataStorage;
-import exception.InvalidAccountException;
-import exception.LoginFailedException;
 import exception.ErrorMessage;
+import exception.InvalidAccountException;
 import exception.InvalidInputException;
+import exception.LoginFailedException;
 import main.Main;
 import model.*;
 import util.Util;
@@ -36,9 +35,11 @@ public class AdminMenu {
             } else {
                 throw new LoginFailedException(ErrorMessage.LOGIN_FAILED);
             }
-        } catch (LoginFailedException | InvalidInputException e) {
+        } catch (RuntimeException | LoginFailedException e) {
             System.out.println(e.getMessage());
             Main.showMenu();
+        } catch (InvalidInputException e) {
+            throw new RuntimeException(e);
         } catch (InvalidAccountException e) {
             throw new RuntimeException(e);
         }
@@ -92,11 +93,7 @@ public class AdminMenu {
     }
 
     public Account createShortTermAccount() throws InvalidInputException {
-       String firstName = Util.readString("Enter first name: ");
-       String lastName = Util.readString("Enter last name: ");
-       int birthYear = Util.readInt("Enter birth year: ");
-       String gender = Util.readString("Enter gender: ");
-       Person user = new Person(firstName,lastName,birthYear,gender);
+        Person user = createPerson();
 
         String accountNumber;
         do {
@@ -113,12 +110,7 @@ public class AdminMenu {
     }
 
     public Account createLongTermAccount() throws InvalidAccountException {
-        String firstName = Util.readString("Enter first name: ");
-        String lastName = Util.readString("Enter last name: ");
-        int birthYear = Util.readInt("Enter birth year: ");
-        String gender = Util.readString("Enter gender: ");
-        Person user = new Person(firstName,lastName,birthYear,gender);
-
+        Person user = createPerson();
         String accountNumber;
         do {
             accountNumber = Util.readString("Enter account number(16 digit): ");
@@ -134,12 +126,7 @@ public class AdminMenu {
     }
 
     public Account createGharzolhasaneAccount() {
-        String firstName = Util.readString("Enter first name: ");
-        String lastName = Util.readString("Enter last name: ");
-        int birthYear = Util.readInt("Enter birth year: ");
-        String gender = Util.readString("Enter gender: ");
-        Person user = new Person(firstName,lastName,birthYear,gender);
-
+        Person user = createPerson();
         String accountNumber;
         do {
             accountNumber = Util.readString("Enter account number(16 digit): ");
@@ -165,6 +152,7 @@ public class AdminMenu {
             System.out.println(String.format("Account %s dose not exist", accountNumber));
     }
 
+
     public Account findAccountByNumber(String accountNumber) {
         for (Account account : DataStorage.accounts) {
             if (account.getAccountNumber().equals(accountNumber)) {
@@ -184,10 +172,18 @@ public class AdminMenu {
             System.out.println("-------------------------");
             System.out.println(String.format("Account Number: %s", account.getAccountNumber()));
             System.out.println(String.format("Balance: %.s", account.getBalance()));
-            System.out.println(String.format("Account Owner: %s  %s",account.user.getFirstName(), account.user.getLastName()));
+            System.out.println(String.format("Account Owner: %s  %s", account.user.getFirstName(), account.user.getLastName()));
             System.out.println(String.format("Account Type: %s", account.getAccountType()));
         }
         System.out.println("------------------------");
+    }
+
+    private Person createPerson() {
+        String firstName = Util.readString("Enter first name: ");
+        String lastName = Util.readString("Enter last name: ");
+        int birthYear = Util.readInt("Enter birth year: ");
+        String gender = Util.readString("Enter gender: ");
+        return new Person(firstName, lastName, birthYear, gender);
     }
 }
 
