@@ -1,17 +1,17 @@
 package model;
 
-import exception.WithdrawalException;
 import enums.AccountType;
 import exception.ErrorMessage;
 import exception.InsufficientBalanceException;
 import exception.InvalidAccountException;
+import exception.WithdrawalException;
 
 public abstract class Account {
     protected final double governmentShare;
-    public Person user;
     protected String accountNumber;
     protected double balance;
     protected String password;
+    private Person user;
 
     public Account(String accountNumber, double balance, String password, double governmentShare, Person user) throws InvalidAccountException {
         if (accountNumber == null || !accountNumber.matches(("\\d{16}"))) {
@@ -42,18 +42,19 @@ public abstract class Account {
     }
 
     public void deposit(double amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException(ErrorMessage.AMOUNT_POSITIVE);
+        }
         balance += amount;
     }
 
     public void withdraw(double amount) throws WithdrawalException {
-        if (amount<=0){
+        if (amount <= 0) {
             throw new WithdrawalException(ErrorMessage.AMOUNT_POSITIVE);
         }
-        double deducted = amount * (1 - governmentShare);
-        if (deducted>balance){
+        if (amount > balance) {
             throw new InsufficientBalanceException(ErrorMessage.INSUFFICENT_BALANCE);
         }
-        balance -= deducted;
     }
 
     public double getBalance() {
@@ -78,4 +79,15 @@ public abstract class Account {
     }
 
     public abstract AccountType getAccountType();
+
+    public Person getUser() {
+        return user;
+    }
+
+    public void setUser(Person user) {
+        this.user = user;
+    }
+    protected double applyGovernmentShare(double amount) {
+        return amount*(1-governmentShare);
+    }
 }

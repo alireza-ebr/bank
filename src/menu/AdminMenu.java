@@ -92,7 +92,7 @@ public class AdminMenu {
         }
     }
 
-    public Account createShortTermAccount() throws InvalidInputException {
+    public Account createShortTermAccount() throws InvalidInputException, InvalidAccountException {
         Person user = createPerson();
 
         String accountNumber;
@@ -125,7 +125,7 @@ public class AdminMenu {
         return new LongTermAccount(accountNumber, balance, password, govShare, user);
     }
 
-    public Account createGharzolhasaneAccount() {
+    public Account createGharzolhasaneAccount() throws InvalidAccountException {
         Person user = createPerson();
         String accountNumber;
         do {
@@ -172,7 +172,7 @@ public class AdminMenu {
             System.out.println("-------------------------");
             System.out.println(String.format("Account Number: %s", account.getAccountNumber()));
             System.out.println(String.format("Balance: %.s", account.getBalance()));
-            System.out.println(String.format("Account Owner: %s  %s", account.user.getFirstName(), account.user.getLastName()));
+            System.out.println(String.format("Account Owner: %s  %s", account.getUser().getFirstName(), account.getUser().getLastName()));
             System.out.println(String.format("Account Type: %s", account.getAccountType()));
         }
         System.out.println("------------------------");

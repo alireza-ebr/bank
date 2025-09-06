@@ -2,9 +2,7 @@
 package model;
 
 import enums.AccountType;
-import exception.ErrorMessage;
-import exception.InvalidAccountException;
-import exception.LimitExceededException;
+import exception.*;
 import exception.LimitExceededException;
 
 public class LongTermAccount extends Account {
@@ -16,15 +14,16 @@ public class LongTermAccount extends Account {
     }
 
     @Override
-    public void withdraw(double amount) {
+    public void withdraw(double amount) throws WithdrawalException {
+        super.withdraw(amount);
         if (amount > dailyWithdrawalLimit) {
-            throw new LimitExceededException("Withdrawal failed : Daily limit");
+            throw new LimitExceededException(ErrorMessage.DAILY_LIMIT);
         }
-        double deducted = amount * (1 - governmentShare);
-        if (deducted > balance) {
-            throw new LimitExceededException(ErrorMessage.INSUFFICIENT);
+        double deducted=applyGovernmentShare(amount);
+        if (deducted>getBalance()) {
+            throw new InsufficientBalanceException(ErrorMessage.INSUFFICIENT);
         }
-        balance -= deducted;
+        setBalance(getBalance()-deducted);
         System.out.println("Withdrew $" + amount + "after government share : $" + deducted + ")");
     }
 
