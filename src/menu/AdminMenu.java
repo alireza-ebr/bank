@@ -1,6 +1,6 @@
 package menu;
 
-import data.DataStorage;
+import data.AccountStore;
 import exception.ErrorMessage;
 import exception.InvalidAccountException;
 import exception.InvalidInputException;
@@ -22,6 +22,8 @@ public class AdminMenu {
         this.adminUsername = scanner.next("Enter new admin username: ");
         this.adminPassword = scanner.next("Enter new admin password: ");
         System.out.println("Admin account created successfully.");
+
+        handleAdminLogin();
     }
 
     public void handleAdminLogin() {
@@ -37,7 +39,7 @@ public class AdminMenu {
             }
         } catch (RuntimeException | LoginFailedException e) {
             System.out.println(e.getMessage());
-            Main.showMenu();
+            Main.showMenu(this.scanner);
         } catch (InvalidInputException e) {
             throw new RuntimeException(e);
         } catch (InvalidAccountException e) {
@@ -61,7 +63,7 @@ public class AdminMenu {
             case 3 -> listAllAccounts();
             case 4 -> {
                 System.out.println("Back to main menu");
-                Main.showMenu();
+                Main.showMenu(this.scanner);
             }
             default -> System.out.println(ErrorMessage.INVALIED_OPTION);
         }
@@ -85,7 +87,7 @@ public class AdminMenu {
         };
 
         if (newAccount != null) {
-            DataStorage.accounts.add(newAccount);
+            AccountStore.addAccount(newAccount);
             System.out.println("Account created");
         } else {
             System.out.println(ErrorMessage.INVALID_ACCOUNT_TYPE);
@@ -99,7 +101,7 @@ public class AdminMenu {
         do {
             accountNumber = Util.readString("Enter account number(16 digit): ");
             if (!accountNumber.matches("\\d{16}")) {
-                throw new InvalidInputException("Invalid account number");
+                throw new InvalidInputException(ErrorMessage.INVALID_ACCOUNT_NUMBER);
             }
         } while (!accountNumber.matches("\\d{16}"));
 
@@ -143,32 +145,21 @@ public class AdminMenu {
 
     public void removeAccount() {
         String accountNumber = Util.readString("Enter account number you would like to remove: ").trim();
-        Account accountToRemove = findAccountByNumber(accountNumber);
+        boolean removed = AccountStore.removeAccount(accountNumber);
 
-        if (accountToRemove != null) {
-            DataStorage.accounts.remove(accountToRemove);
+        if (removed) {
             System.out.println(String.format("Account %s has been removed successfully", accountNumber));
         } else
             System.out.println(String.format("Account %s dose not exist", accountNumber));
     }
 
-
-    public Account findAccountByNumber(String accountNumber) {
-        for (Account account : DataStorage.accounts) {
-            if (account.getAccountNumber().equals(accountNumber)) {
-                return account;
-            }
-        }
-        return null;
-    }
-
     public void listAllAccounts() {
-        if (DataStorage.accounts.isEmpty()) {
+        if (AccountStore.isEmpty()) {
             System.out.println("No accounts available");
             return;
         }
         System.out.println("\n*** List of all accounts ***");
-        for (Account account : DataStorage.accounts) {
+        for (Account account : AccountStore.getAccounts()) {
             System.out.println("-------------------------");
             System.out.println(String.format("Account Number: %s", account.getAccountNumber()));
             System.out.println(String.format("Balance: %.s", account.getBalance()));

@@ -1,12 +1,20 @@
 package menu;
 
-import data.DataStorage;
+import data.AccountStore;
 import exception.ErrorMessage;
 import main.Main;
 import model.Account;
 import util.Util;
 
+import java.util.Scanner;
+
 public class OwnerMenu {
+    private final Scanner scanner;
+
+    public OwnerMenu(Scanner scanner) {
+        this.scanner = scanner;
+        handleAccountOwnerLogin();
+    }
 
     public void handleAccountOwnerLogin() {
         String accountNumber = Util.readString("Enter account number: ");
@@ -23,7 +31,7 @@ public class OwnerMenu {
     }
 
     private Account findAccountByNumber(String accountNumber) {
-        for (Account account : DataStorage.accounts) {
+        for (Account account : AccountStore.accounts) {
             if (account.getAccountNumber().equals(accountNumber)) {
                 return account;
             }
@@ -49,7 +57,7 @@ public class OwnerMenu {
             case 3 -> withdrawFunc(account);
             case 4 -> {
                 System.out.println("Back to main menu");
-                Main.showMenu();
+                Main.showMenu(this.scanner);
             }
             default -> System.out.println(ErrorMessage.INVALIED_OPTION);
         }

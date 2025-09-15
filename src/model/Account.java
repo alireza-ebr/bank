@@ -87,7 +87,8 @@ public abstract class Account {
     public void setUser(Person user) {
         this.user = user;
     }
+
     protected double applyGovernmentShare(double amount) {
-        return amount*(1-governmentShare);
+        return amount * (1 - governmentShare);
     }
 }
